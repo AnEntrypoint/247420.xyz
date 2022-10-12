@@ -2,7 +2,7 @@ require('./index.js')
 
 const express = require('express')
 const app = express()
-const port = env.port||8082
+const port = process.env.port||8082
 
 app.get('/', (req, res) => res.redirect('./index.html'))
 
