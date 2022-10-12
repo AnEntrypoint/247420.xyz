@@ -2,13 +2,9 @@ import('@geckos.io/server').then((geckos)=>{
     const { iceServers } = geckos;
     var _ammo = require('@enable3d/ammo-on-nodejs/ammo/ammo.js')
     const { Physics, ServerClock } = require('@enable3d/ammo-on-nodejs')
-    const sio = require( 'socket.io');
     const io1 = geckos.geckos({ iceServers, url:'https://sock.lan.247420.xyz'});
     io1.onConnection((channel) => { });
     io1.listen();
-    //const io2 = sio('https://sock.lan.247420.xyz');
-    //io2.on('connection', (client) => { });
-    //io2.listen(8081);
     const teleport = (box) => {
         box.body.setCollisionFlags(2);
         box.position.set(0, 2, 0);
@@ -68,7 +64,6 @@ import('@geckos.io/server').then((geckos)=>{
                 },
             };
             io1.emit('updates', updates);
-            //io2.emit('updates', updates);
         }
         update(delta) {
             const { position: pos } = this.box;
