@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="enable3d.js"></script>
+  <script src="geckos.js"></script>
+  <title>geckos vs socket</title>
+</head>
+
+<body style="margin: 0px; padding: 0px; overflow: hidden" ;>
+  <div id="description-wrapper"
+    style="position: absolute; width: 100%; justify-content: space-around; font-size: 22px; font-family: sans-serif;">
+    <p id="description">
+      geckos.io (UDP)
+    </p>
+  </div>
+  <div id="canvas-wrapper">
+    <div id="canvas1"></div>
+  </div>
+  <script>
+      const {
+        enable3d,
+        Scene3D,
+        Canvas,
+        ThirdDimension,
+        THREE,
+        JoyStick,
+        PointerLock,
+        PointerDrag,
+        ExtendedObject3D,
+        ThirdPersonControls,
+        Project
+      } = ENABLE3D
+    class Geckos extends Scene3D {
+      constructor() {
+          super('MainScene')
+      }
+      geckos() {
+        const channel = geckos({ url: "https://rtc.lan.247420.xyz", port: 443 })
+
+        channel.onConnect(error => {
+          if (error) {
+            console.error(error.message)
+            return
+          }
+
+          channel.on('updates', (updates) => {
+            const u = updates
+            if (this.box) {
+              this.box.position.set(u.pos.x, u.pos.y, u.pos.z)
+              this.box.quaternion.set(u.quat.x, u.quat.y, u.quat.z, u.quat.w)
+            } else {
+              this.box = this.add.box({}, { phong: { color: 'red' } })
+            }
+          })
+        })
+      }
+      init() {
+        this.setSize(window.innerWidth, window.innerHeight)
+        this.warpSpeed('-orbitControls')
+        this.camera.position.set(0, 2, 10)
+        this.camera.lookAt(0, 0, 0)
+      }
+      create() {
+        this.geckos()
+      }
+      update() {
+        if (this.box) {
+          this.camera.position
+            .copy(this.box.position)
+            .add(new THREE.Vector3(0, 3, 7))
+          this.camera.lookAt(this.box.position.clone())
+        }
+      }
+    }
+
+    console.log({Project})
+    new Project({ scenes: [Geckos], parent: 'canvas1', antialias: true })
+
+  </script>
+</body>
+
+</html>

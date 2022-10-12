@@ -1,0 +1,23 @@
+{
+  "name": "247420.xyz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./server.js --watch"
+  },
+  "keywords": [],
+  "author": "lanmower",
+  "license": "MIT",
+  "devDependencies": {
+    "node-pre-gyp": "^0.17.0",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "@enable3d/ammo-on-nodejs": "latest",
+    "@geckos.io/client": "^2.2.3",
+    "@geckos.io/server": "^2.2.3",
+    "enable3d": "^0.25.3",
+    "express": "^4.17.1"
+  }
+}
