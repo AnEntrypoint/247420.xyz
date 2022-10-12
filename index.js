@@ -28,9 +28,9 @@ import('@geckos.io/server').then((geckos) => {
                 height: 20,
             });
             // add box
-            this.entities = {};
+            this.entities = [];
             const box = this.physics.add.box({ y: 20 });
-            this.entities[box.uuid] = box;
+            this.entities.push(box);
             setInterval(() => {
                 for (ent of this.entities) {
                     const x = (Math.random() - 0.5) * 8;
@@ -50,7 +50,7 @@ import('@geckos.io/server').then((geckos) => {
         }
         send() {
             const updates = [];
-            for (ent of this.entities) {
+            for (let ent of this.entities) {
                 const { uuid, position: pos, quaternion: quat } = ent;
                 const fixed = (n, f) => {
                     return parseFloat(n.toFixed(f));
@@ -73,10 +73,13 @@ import('@geckos.io/server').then((geckos) => {
             io1.emit('updates', updates);
         }
         update(delta) {
-            const { position: pos } = this.entities.box;
-            if (pos.y < -10)
-                teleport(this.entities.box);
-            this.physics.update(delta * 1000);
+
+            for (let ent of this.entities) {
+                const { position: pos } = ent;
+                if (pos.y < -10)
+                    teleport(ent);
+                this.physics.update(delta * 1000);
+            }
         }
     }
     _ammo().then(ammo => {
