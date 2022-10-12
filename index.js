@@ -1,8 +1,8 @@
-import('@geckos.io/server').then((geckos)=>{
+import('@geckos.io/server').then((geckos) => {
     const { iceServers } = geckos;
     var _ammo = require('@enable3d/ammo-on-nodejs/ammo/ammo.js')
     const { Physics, ServerClock } = require('@enable3d/ammo-on-nodejs')
-    const io1 = geckos.geckos({ iceServers, url:'https://sock.lan.247420.xyz'});
+    const io1 = geckos.geckos({ iceServers, url: 'https://sock.lan.247420.xyz' });
     io1.onConnection((channel) => { });
     io1.listen();
     const teleport = (box) => {
@@ -74,9 +74,9 @@ import('@geckos.io/server').then((geckos)=>{
     }
     _ammo().then(ammo => {
         globalThis.Ammo = ammo
-      
+
         // start server scene
         new ServerScene()
-      })
-    
+    })
+
 });
