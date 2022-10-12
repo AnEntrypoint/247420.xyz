@@ -28,13 +28,17 @@ import('@geckos.io/server').then((geckos) => {
                 height: 20,
             });
             // add box
-            this.box = this.physics.add.box({ y: 20 });
+            this.entities = {};
+            const box = this.physics.add.box({ y: 20 });
+            this.entities[box.uuid] = box;
             setInterval(() => {
-                const x = (Math.random() - 0.5) * 8;
-                const y = (Math.random() - 0.5) * 8;
-                const z = (Math.random() - 0.5) * 8;
-                this.box.body.applyForce(x, 10, z);
-                this.box.body.applyTorque(x * 4, y * 4, z * 4);
+                for (ent of this.entities) {
+                    const x = (Math.random() - 0.5) * 8;
+                    const y = (Math.random() - 0.5) * 8;
+                    const z = (Math.random() - 0.5) * 8;
+                    ent.body.applyForce(x, 10, z);
+                    ent.body.applyTorque(x * 4, y * 4, z * 4);
+                }
             }, 2000);
             // clock
             const clock = new ServerClock();
@@ -45,30 +49,33 @@ import('@geckos.io/server').then((geckos) => {
         create() {
         }
         send() {
-            const { uuid, position: pos, quaternion: quat } = this.box;
-            const fixed = (n, f) => {
-                return parseFloat(n.toFixed(f));
-            };
-            const updates = {
-                uuid,
-                pos: {
-                    x: fixed(pos.x, 2),
-                    y: fixed(pos.y, 2),
-                    z: fixed(pos.z, 2),
-                },
-                quat: {
-                    x: fixed(quat.x, 3),
-                    y: fixed(quat.y, 3),
-                    z: fixed(quat.z, 3),
-                    w: fixed(quat.w, 3),
-                },
-            };
+            const updates = [];
+            for (ent of this.entities) {
+                const { uuid, position: pos, quaternion: quat } = ent;
+                const fixed = (n, f) => {
+                    return parseFloat(n.toFixed(f));
+                };
+                updates.push({
+                    uuid,
+                    pos: {
+                        x: fixed(pos.x, 2),
+                        y: fixed(pos.y, 2),
+                        z: fixed(pos.z, 2),
+                    },
+                    quat: {
+                        x: fixed(quat.x, 3),
+                        y: fixed(quat.y, 3),
+                        z: fixed(quat.z, 3),
+                        w: fixed(quat.w, 3),
+                    },
+                });
+            }
             io1.emit('updates', updates);
         }
         update(delta) {
-            const { position: pos } = this.box;
+            const { position: pos } = this.entities.box;
             if (pos.y < -10)
-                teleport(this.box);
+                teleport(this.entities.box);
             this.physics.update(delta * 1000);
         }
     }

@@ -48,11 +48,11 @@
 
           channel.on('updates', (updates) => {
             const u = updates
-            if (this.box) {
-              this.box.position.set(u.pos.x, u.pos.y, u.pos.z)
-              this.box.quaternion.set(u.quat.x, u.quat.y, u.quat.z, u.quat.w)
+            if (this[u.uuid]) {
+              this[u.uuid].position.set(u.pos.x, u.pos.y, u.pos.z)
+              this[u.uuid].quaternion.set(u.quat.x, u.quat.y, u.quat.z, u.quat.w)
             } else {
-              this.box = this.add.box({}, { phong: { color: 'red' } })
+              this[u.uuid] = this.add.box({}, { phong: { color: 'red' } })
             }
           })
         })
