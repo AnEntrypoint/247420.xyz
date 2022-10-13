@@ -1,14 +1,10 @@
-# Geckos.io v2 CJS example
-
-Geckos v2 uses ESM.  
-Here is an example how to use it in a CJS project.
-
+# 247420.xyz
 ```bash
 # clone
-npx gitget geckosio/geckos-v2-cjs-example
+npx gitget AnEntrypoint/247420.xyz
 
 # change directory
-cd geckos-v2-cjs-example
+cd 247420.xyz
 
 # install
 npm install
@@ -17,5 +13,5 @@ npm install
 npm start
 
 # open
-http://127.0.0.1:3000/
+http://127.0.0.1:8082/
 ```
