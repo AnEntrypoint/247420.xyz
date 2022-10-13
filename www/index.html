@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./geckos.io-client.2.1.4.min.js"></script>
+  <script src="./three.js"></script>
+  <script src="./gltfloader.js"></script>
+</head>
+
+<body>
+  <script>
+    const scene = new THREE.Scene()
+    const light = new THREE.SpotLight()
+    const light2 = new THREE.SpotLight()
+    light.position.set(5, 5, 5)
+    light2.position.set(5, 5, 5)
+    scene.add(light)
+    scene.add(light2)
+
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    )
+    camera.position.z = 20
+
+    const renderer = new THREE.WebGLRenderer()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    document.body.appendChild(renderer.domElement)
+    const channel = geckos({ url: "https://rtc.lan.247420.xyz", port: 443 })
+    let entities = {};
+    channel.onConnect(error => {
+      if (error) {
+        console.error(error.message)
+        return
+      }
+      channel.on('updates', (updates) => {
+        for (let e of Object.keys(entities)) {
+          if (!updates.filter((u) => { return u.uuid == e }).length) {
+            delete entities[e];
+          }
+        }
+        for (let u of updates) {
+          if (entities[u.uuid]) {
+            entities[u.uuid].position.set(u.pos.x, u.pos.y, u.pos.z)
+            entities[u.uuid].quaternion.set(u.quat.x, u.quat.y, u.quat.z, u.quat.w)
+          } else {
+            entities[u.uuid] = { position: { set: () => { } }, quaternion: { set: () => { } } };
+            window.createImageBitmap = undefined;
+            const loader = new THREE.GLTFLoader()
+            loader.load(
+              'schwepev2.glb',
+              function (gltf) {
+                entities[u.uuid] = gltf.scene;
+                scene.add(gltf.scene)
+              })
+          }
+        }
+      })
+    })
+
+    window.addEventListener('resize', onWindowResize, false)
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize(window.innerWidth, window.innerHeight)
+      render()
+    }
+
+    function animate() {
+      requestAnimationFrame(animate)
+      render()
+    }
+
+    function render() {
+      renderer.render(scene, camera)
+    }
+
+    animate()
+  </script>
+</body>
+
+</html>
