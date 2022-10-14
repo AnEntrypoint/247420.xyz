@@ -38,8 +38,8 @@ const main = async () => {
                 y: -0.5,
                 collisionFlags: 1,
                 mass: 0,
-                width: 20,
-                height: 20,
+                width: 40,
+                height: 40,
             });
             // add box
             this.entities = [];

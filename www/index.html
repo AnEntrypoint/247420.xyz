@@ -49,7 +49,10 @@
     loader.load(
       'env.glb',
       function (gltf) {
-        gltf.scene.scale.multiplyScalar(2.0);
+        gltf.scene.scale.multiplyScalar(3.0);
+        gltf.scene.translateX( 55 );
+        gltf.scene.translateZ( 10 );
+        gltf.scene.translateY( 2 );
         scene.add(gltf.scene)
       });
     const light = new THREE.SpotLight()
