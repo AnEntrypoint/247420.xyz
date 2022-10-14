@@ -5,20 +5,69 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.145.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.145.0/examples/jsm/"
+      }
+    }
+  </script>
   <script src="./geckos.io-client.2.1.4.min.js"></script>
-  <script src="./three.js"></script>
-  <script src="./gltfloader.js"></script>
+  <script src="https://unpkg.com/three@0.145.0/build/three.min.js"></script>
+  <!--script src="https://unpkg.com/three@0.145.0/examples/js/loaders/GLTFLoader.js"></script-->
+  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+  <script async src="https://unpkg.com/meshoptimizer@0.18.1/meshopt_decoder.js"></script>
+
 </head>
 
 <body>
-  <script>
+  <script type="module">
+
+    import * as THREE from 'three';
+
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
+    import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+
     const scene = new THREE.Scene()
+    console.log(GLTFLoader);
+    window.loader = new GLTFLoader();
+
+    const renderer = new THREE.WebGLRenderer()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+
+    const ktx2Loader = new KTX2Loader()
+      .setTranscoderPath('basis/')
+      .detectSupport(renderer);
+
+    loader.setMeshoptDecoder(MeshoptDecoder);
+    loader.setKTX2Loader(ktx2Loader);
+    loader.load(
+      'env.glb',
+      function (gltf) {
+        gltf.scene.scale.multiplyScalar(2.0);
+        scene.add(gltf.scene)
+      });
     const light = new THREE.SpotLight()
     const light2 = new THREE.SpotLight()
+
+
     light.position.set(5, 5, 5)
     light2.position.set(5, 5, 5)
     scene.add(light)
     scene.add(light2)
+
+    const environment = new RoomEnvironment();
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+
+    scene.background = new THREE.Color(0xbbbbbb);
+    scene.environment = pmremGenerator.fromScene(environment).texture;
+    environment.dispose();
+
 
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -28,8 +77,6 @@
     )
     camera.position.z = 20
 
-    const renderer = new THREE.WebGLRenderer()
-    renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(renderer.domElement)
     const channel = geckos({ url: "https://rtc.lan.247420.xyz", port: 443 })
     let entities = {};
@@ -51,7 +98,6 @@
           } else {
             entities[u.uuid] = { position: { set: () => { } }, quaternion: { set: () => { } } };
             window.createImageBitmap = undefined;
-            const loader = new THREE.GLTFLoader()
             loader.load(
               'schwepev2.glb',
               function (gltf) {
@@ -62,6 +108,12 @@
         }
       })
     })
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.addEventListener('change', render); // use if there is no animation loop
+    controls.minDistance = 10;
+    controls.maxDistance = 100;
+    controls.target.set(10, 20, - 32);
+    controls.update();
 
     window.addEventListener('resize', onWindowResize, false)
     function onWindowResize() {
