@@ -15,7 +15,6 @@
   </script>
   <script src="./libs/geckos.io-client.2.1.4.min.js"></script>
   <script src="https://unpkg.com/three@0.145.0/build/three.min.js"></script>
-  <!--script src="https://unpkg.com/three@0.145.0/examples/js/loaders/GLTFLoader.js"></script-->
   <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
   <script async src="https://unpkg.com/meshoptimizer@0.18.1/meshopt_decoder.js"></script>
 
@@ -30,7 +29,9 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+		import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
+
     import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 
     const scene = new THREE.Scene()
@@ -41,11 +42,16 @@
     renderer.setSize(window.innerWidth, window.innerHeight)
 
     const ktx2Loader = new KTX2Loader()
-      .setTranscoderPath('basis/')
+      .setTranscoderPath('https://unpkg.com/three@0.145.0/examples/js/libs/basis/')
       .detectSupport(renderer);
 
+
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.145.0/examples/js/libs/draco/' );
+    dracoLoader.setDecoderConfig( { type: 'js' } );
     loader.setMeshoptDecoder(MeshoptDecoder);
     loader.setKTX2Loader(ktx2Loader);
+    loader.setDRACOLoader( dracoLoader );
     loader.load(
       'env.glb',
       function (gltf) {
