@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "npm run dev",
-    "dev": "nodemon dist/server.js"
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "Yannick Deubel",
