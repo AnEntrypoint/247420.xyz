@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://kit.fontawesome.com/c9500776a0.js" crossorigin="anonymous"></script>
+    
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script src="wasm/msc_basis_transcoder.js"></script>
+    <script src="dist/full-gltf-model.js"></script>
+  </head>
+  <body>
+    <a-scene background="color: #FAFAFA">
+        <a-assets>
+            <a-asset-item id="model" src="assets/schwepev2.glb"></a-asset-item>
+            <a-asset-item id="model-packed" src="assets/town.glb"></a-asset-item>
+        </a-assets>
+      <a-entity position="-3 0 -3">
+        <a-text position="-1 3 0" color="black" value="megaladapis"></a-text>
+        <a-entity
+          rotation="0 180 0"
+          full-gltf-model="#model"
+          shadow="cast: false; receive: false"
+        ></a-entity>
+      </a-entity>
+      <a-entity position="3 0 -4">
+        <a-text position="-1 3 0" color="black" value="megaladapis-new (packed)"></a-text>
+        <a-entity
+          rotation="0 180 0"
+          full-gltf-model="#model-packed"
+          shadow="cast: false; receive: false"
+        ></a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
