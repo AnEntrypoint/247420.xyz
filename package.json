@@ -7,13 +7,9 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@fastify/formbody": "^7.4.0",
-    "@fastify/static": "^6.6.0",
-    "@fastify/view": "^7.3.0",
     "discord.js": "^14.7.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "fastify": "^4.9.2",
     "handlebars": "^4.7.7",
     "node-cache": "^5.1.2",
     "node-fetch": "^3.3.0",
