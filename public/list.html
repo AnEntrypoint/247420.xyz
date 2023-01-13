@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/logo.gif">
+    <title>Smoking weed and Creating content | 247420.xyz</title>
+    <link rel="canonical" href="https://247420.xyz" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Join the entrypoint community of people who smoke weed and create amazing content like music, graphics and websites. Free to join at 247420.xyz" />
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous">
+</head>
+
+<body style='
+background-image: url("bg.png");
+background-repeat: repeat;
+'>
+    <style>
+        body::before {
+            content: "";
+            position: absolute;
+            background-image: url(leaves.jpg);
+            filter: grayscale(100%);
+        }
+    </style>
+    <header>
+        <nav>
+            <div class="header_logo">
+                <img src="/logo.gif" alt="" srcset="">
+            </div>
+            <div class="header_links">
+                <ul class="nav_links">
+                    <li class="nav_link"><a href="https://about.247420.xyz" target="_blank">about 247420</a></li>
+                    <!-- <li class="nav_link"><a href="#">Shop</a></li> -->
+                    <!-- <li class="nav_link"><a href="#">Repos</a></li> -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div style="max-width:1000px; margin:auto;">
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly;">
+            <iframe
+                src="https://gateway.ipfscdn.io/ipfs/Qmcine1gpZUbQ73nk7ZGCcjKBVFYXrEtqrhujXk3HDQ6Nn/erc721.html?contract=0xB96635E821Ef53790628705e1B68fca7958b42a3&chainId=137&theme=dark&primaryColor=cyan"
+                width="500px" height="510px" style="max-width:100%;display:inline-block;" frameborder="0"></iframe>
+            <div class="shadow" style="max-width:400px">
+                <center>
+                    <h1>EntryPoint: Genesis Babies</h1>
+                    <h3>Genesis Babies are the first membership tokens issued to the public by EntryPoint DAO.</h3>
+                    <br />
+                    <p>A collection of 100 unique NFTs that unlock a Web3 authenticated portal to a private crypto
+                        community and exercise voting power and creative direction from within the EntryPoint community.
+                    </p>
+                    <p>The goal of EntryPoint: Genesis Babies is to bootstrap initial liquidity in the EP token
+                        ecosystem.</p>
+                    <br />
+                    <p>Holders may be eligible for exclusive rewards!</p>
+                    <img src="baseschwepe.png"/>
+                </center>
+            </div>
+        </div>
+    </div>
+    <div style=" display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly;">
+
+        {{content}}
+
+    </div>
+    <script>
+        document.querySelectorAll('li').forEach(a => { if (a.children[0].href == window.location.href || a.children[0].href == 'https://twitter.com/' || a.children[0].href == 'https://facebook.com/' || a.children[0].href == 'https://youtube.com/') a.style.display = 'none' });
+    </script>
+</body>
+
+</html>

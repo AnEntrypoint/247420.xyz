@@ -1,0 +1,81 @@
+    <div id="profileContainer">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">	
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins|Roboto" rel="stylesheet" type='text/css'>
+	
+	<style>
+	body {
+	{{#theme.background-color}}
+		background-color: {{theme.background-color}};
+	{{/theme.background-color}}
+	{{^theme.background-color}}
+		background-color: #e2e1e0; /*#f98008*/ 
+	{{/theme.background-color}}
+	
+		height: 100%;
+		font-family: "Roboto", Helvetica, Arial, sans-serif;
+	}
+	h1, h2, h3, h4, h5, h6, p {
+		font-family: "Poppins", Helvetica, Arial, sans-serif;
+	}
+	#profileContainer {
+		height: 100%;
+	}
+	#sub-head {
+		color: #a1a1a1;
+	}
+	#profile {
+		background-color: white;
+	    padding: 40px 30px;
+		margin: 10px;
+		box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	}
+	#div-p {
+		padding-bottom:10px;
+	}
+    .avatarMask{
+        height:100px !important;
+    }
+	</style>
+      <div id="profile">
+        <header>
+          
+          <div class="avatar">
+            <img class="avatarMask" src="{{basics.picture_fullpath}}" alt="avatar">
+            <!--img src="https://themes.gohugo.io//theme/pulp/img/avatar-border.svg" alt="avatar-border"-->
+          </div>
+          
+          <h1 class="author">{{basics.name}}</h1>
+		  <h3 id="sub-head">{{basics.label}}</h3>
+        </header>
+        <div id="div-p">
+        <p>
+               {{&basics.summary}}
+        </p>
+        </div>
+        <nav>
+          <ul>
+            {{#basics.blog}}
+            <li><a href="{{basics.blog}}" aria-label="blog"><i class='fa fa-book-open fa-lg'></i><br></a></li>
+			{{/basics.blog}}
+            {{#basics.twitter}}
+            <li><a href="{{basics.twitter}}" aria-label="twitter"><i class='fab fa-twitter fa-lg'></i><br></a></li>
+			{{/basics.twitter}}
+            {{#basics.github}}
+            <li><a href="{{basics.github}}" aria-label="github"><i class='fab fa-github fa-lg'></i><br></a></li>
+            {{/basics.github}}
+            {{#basics.facebook}}
+            <li><a href="{{basics.facebook}}" aria-label="facebook"><i class='fab fa-facebook fa-lg'></i><br></a></li>
+            {{/basics.facebook}}
+			{{#basics.email}}
+            <li><a href="mailto:{{basics.email}}" aria-label="email"><i class='fa fa-envelope fa-lg'></i><br></a></li>
+            {{/basics.email}}
+          </ul>
+        </nav>
+      </div>
+    </div>
+	<!--footer>
+  <p>
+  Inspired by <a href="https://github.com/koirand/pulp/">pulp</a> theme.
+  </p>
+</footer-->

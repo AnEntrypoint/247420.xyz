@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/logo.gif">
+    <title>{{nickname}}</title>
+    <link rel="canonical" href="https://247420.xyz" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="{{shortform}}" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+
+<body class="{{customclass}}">
+    <style>
+        {{customstyle}}
+    </style>
+    <div
+        style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url('{{back}}');">
+        <section class="main">
+            <div id="shadow">
+                <section>
+                    <header>
+                        <nav>
+                            <div class="header_logo">
+                                <a href="/"><img src="/logo.gif" alt="" srcset=""></a>
+                            </div>
+                            <div class="header_links">
+                                <ul class="nav_links">
+                                    <li class="nav_link"><a href="/">Home</a></li>
+                                    <!-- <li class="nav_link"><a href="#">Shop</a></li> -->
+                                    <!-- <li class="nav_link"><a href="#">Repos</a></li> -->
+                                </ul>
+                            </div>
+                        </nav>
+                    </header>
+
+                    <img id="avatar" src="{{avatar}}" alt="" srcset="">
+
+                    <h2>{{nickname}}</h2>
+                    <div id="nft">{{nft}}</div>
+                    <div>
+                        <h4>{{shortform}}</h4>
+                    </div>
+
+                    <p id="description">{{description}}</p>
+                    <ul>
+                        <li><a target="_blank" href="https://discord.gg/an-entrypoint-367741339393327104"><i class="fab fa-discord"></i></a></li>
+                        <li><a target="_blank" href="{{github}}"><i class="fab fa-github"></i></a></li>
+                        <li><a target="_blank" href="https://youtube.com/{{youtube}}"><i class="fab fa-youtube"></i></a>
+                        </li>
+                        <li><a target="_blank" href="{{mastodon}}"><i class="fab fa-mastodon"></i></a></li>
+                        <li><a target="_blank" href="https://twitter.com/{{twitter}}"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li><a target="_blank" href="https://facebook.com/{{facebook}}"><i
+                                    class="fab fa-facebook"></i></a></li>
+                    </ul>
+                </section>
+            </div>
+        </section>
+    </div>
+    <script>
+        document.querySelectorAll('ul li').forEach(a => { if (a.children[0].href == window.location.href || a.children[0].href == 'https://twitter.com' || a.children[0].href == 'https://facebook.com' || a.children[0].href == 'https://youtube.com') a.style.display = 'none' });
+        document.getElementById("description").innerHTML = new Remarkable().render(document.getElementById("description").innerHTML);
+    </script>
+</body>
+
+</html>
