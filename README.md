@@ -1,42 +1,11 @@
-# Hello Node!
+247420.xyz
 
-This project includes a Node.js server script and a web page that connects to it. The front-end page presents a form the visitor can use to submit a color name, sending the submitted value to the back-end API running on the server. The server returns info to the page that allows it to update the display with the chosen color. 🎨
+We are is a Discord community of creative professionals who are dedicated to producing the world's most innovative and original media. These individuals work around the clock, using their skills and talents to craft unique and engaging content that resonates with audiences of all ages.
 
-[Node.js](https://nodejs.org/en/about/) is a popular runtime that lets you run server-side JavaScript. This project uses the [Fastify](https://www.fastify.io/) framework and explores basic templating with [Handlebars](https://handlebarsjs.com/).
+At the heart of this community is a shared passion for creativity and a love of weed. Members of this community enjoy smoking marijuana as they work, using it as a tool to unlock their full creative potential and push the boundaries of what is possible.
 
-## Prerequisites
+Whether they are working on music, art, film, or something else entirely, these creative professionals are always looking for ways to bring something new and exciting to the table. They are a tight-knit group, always willing to collaborate and support one another as they strive to achieve their goals.
 
-You'll get best use out of this project if you're familiar with basic JavaScript. If you've written JavaScript for client-side web pages this is a little different because it uses server-side JS, but the syntax is the same!
+As a result of their tireless efforts and dedication, this community has become a hub for some of the most impressive and original media being produced today. From cutting-edge music and art to groundbreaking films and more, this community is filled with creative individuals who are pushing the limits and constantly finding new ways to express themselves.
 
-## What's in this project?
-
-← `README.md`: That’s this file, where you can tell people what your cool website does and how you built it.
-
-← `public/style.css`: The styling rules for the pages in your site.
-
-← `server.js`: The **Node.js** server script for your new site. The JavaScript defines the endpoints in the site back-end, one to return the homepage and one to update with the submitted color. Each one sends data to a Handlebars template which builds these parameter values into the web page the visitor sees.
-
-← `package.json`: The NPM packages for your project's dependencies.
-
-← `src/`: This folder holds the site template along with some basic data files.
-
-← `src/pages/index.hbs`: This is the main page template for your site. The template receives parameters from the server script, which it includes in the page HTML. The page sends the user submitted color value in the body of a request, or as a query parameter to choose a random color.
-
-← `src/colors.json`: A collection of CSS color names. We use this in the server script to pick a random color, and to match searches against color names.
-
-← `src/seo.json`: When you're ready to share your new site or add a custom domain, change SEO/meta settings in here.
-
-## Try this next 🏗️
-
-Take a look in `TODO.md` for next steps you can try out in your new site!
-
-___Want a minimal version of this project to build your own Node.js app? Check out [Blank Node](https://glitch.com/edit/#!/remix/glitch-blank-node)!___
-
-![Glitch](https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2FLogo_Color.svg?v=1602781328576)
-
-## You built this with Glitch!
-
-[Glitch](https://glitch.com) is a friendly community where millions of people come together to build web apps and websites.
-
-- Need more help? [Check out our Help Center](https://help.glitch.com/) for answers to any common questions.
-- Ready to make it official? [Become a paid Glitch member](https://glitch.com/pricing) to boost your app with private sharing, more storage and memory, domains and more.
+Overall, this Discord community of creative professionals working around the clock and smoking weed is a place where the most talented and innovative minds come together to create truly memorable and impactful media. So, if you're a creative professional looking to join a supportive and inspiring community, this could be the perfect place for you.
