@@ -8,13 +8,9 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const http = require("http");
-const https = require("https");
 const Web3 = require("web3");
 const fetch = require('node-fetch-commonjs');
-
 let httpServer;
-
-
 
 //let web3 = new Web3(new Web3.providers.HttpProvider("https://****/"));
 
@@ -94,7 +90,6 @@ let dns = new web3.eth.Contract(abi.abi, "0xB96635E821Ef53790628705e1B68fca7958b
 let owners = JSON.parse(fs.readFileSync('public/babies/owners.json'));
 let oldcount = 0;
 const getBabies = async () => {
-
   let count = await dns.methods.totalMinted().call();
   if (oldcount == count) return;
   for (let x = 0; x < count; x++) {
@@ -123,7 +118,7 @@ setInterval(async () => {
 getBabies();
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
-  res.set('Cache-control', 'public, max-age=1')
+  res.set('Cache-control', 'public, max-age=846000')
   next();
 })
 app.use(express.static("public"));
@@ -133,6 +128,35 @@ app.use(function (req, res, next) {
 })
 const NodeCache = require("node-cache");
 const cache = new NodeCache();
+const path = require('path');
+
+app.get('/random-png', (req, res) => {
+  // specify the directory containing the PNG files
+  const directory = 'public/schwepes-transparent';
+  
+  // read all files in the directory
+  fs.readdir(directory, (err, files) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      // filter for PNG files
+      const pngFiles = files.filter(file => file.endsWith('.png'));
+      
+      // choose a random file
+      const randomFile = pngFiles[Math.floor(Math.random() * pngFiles.length)];
+      
+      // read the file and send its contents as the response
+      fs.readFile(path.join(directory, randomFile), (err, data) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.set('Content-Type', 'image/png');
+          res.send(data);
+        }
+      });
+    }
+  });
+});
 
 app.all("/verify", function (req, res) {
   let signatureHex = req.body.signature;
@@ -169,6 +193,10 @@ app.use("/@:id", (req, res) => {
     const address = req.params.id.replace('.json', '');
     const data = JSON.parse(fs.readFileSync("public/members/" + address + ".json"));
     let template = fs.readFileSync('public/profile.html').toString('utf-8');
+    let styleblock = fs.readFileSync('public/styleblock.html').toString('utf-8');
+    template = template.replace('{{styleblock}}', styleblock);
+    let header = fs.readFileSync('public/header.html').toString('utf-8');
+    template = template.replace('{{header}}', header);
     for (let entry in data) {
       while (template.indexOf(`{{` + entry + `}}`) != -1) {
         template = template.replace(`{{` + entry + `}}`, data[entry]);
@@ -183,9 +211,9 @@ app.use("/@:id", (req, res) => {
         for (babyindex in owned) {
           nft += `
                 <div class="shadow" style="display:inline-block;">
-                    <img  height="128" src="${owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')}">
-                    <h3>${owned[babyindex].name}</h3>
-                    <div>${owned[babyindex].attributes.map(a => '<b>' + a.trait_type + '</b>: ' + a.value).join('<br/>')}</div>
+                    <img alt="genesisbaby" height="96" width="96" src="${owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')}">
+                    <h6>${owned[babyindex].name}</h6>
+                    <div style="font-size:10px">${owned[babyindex].attributes.map(a => '<b>' + a.trait_type + '</b>: ' + a.value).join('<br/>')}</div>
                 </div>
             `;
         }
@@ -194,19 +222,42 @@ app.use("/@:id", (req, res) => {
     template = template.replace(`{{nft}}`, nft);
 
     cache.set(req.params.id, template, 999999999);
+    res.setHeader('Content-Type', 'text/html');
     res.end(template);
-
-
   } catch (e) {
     console.error(e)
     res.end('err')
   }
 });
 
+
+app.use("/schwepes", (req, res) => {
+  const files = fs.readdirSync('./public/schwepes-transparent');
+  let htmls =[];
+  const cached = cache.get('schwepes');
+  if (cached) {
+    console.log('cached schwepes');
+    res.setHeader('Content-Type', 'text/html');
+    res.end(cached);
+    return;
+  }
+  try {
+    for (const file of files) {
+      htmls.push( `<img alt="genesisbaby" width="200" loading="lazy" style="border-radius: 1em;" src="schwepes-transparent/${file}">`);
+    }
+    const out = htmls.join('');
+    cache.set('schwepes', out, 999999999);
+    res.setHeader('Content-Type', 'text/html');
+    res.end(out);
+  } catch (e) {
+    console.error(e);
+    res.setHeader('Content-Type', 'text/html');
+    res.end('err');
+  }
+});
+
 app.use("/", (req, res) => {
   const files = fs.readdirSync('./public/members');
-  const owners = JSON.parse(fs.readFileSync('public/babies/owners.json'));
-  let output = '';
   let chunks = [];
   let members =[];
   const cached = cache.get('list');
@@ -231,7 +282,7 @@ app.use("/", (req, res) => {
               member.hasbaby = true;
               member.nft += `
                 <div style="display:inline-block;margin:1em;">
-                    <img style="border-radius: 1em;" height="64" src="${owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')}">
+                    <img alt="genesisbaby" loading="lazy" style="border-radius: 1em;" height="64" width="64" src="${owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')}">
                 </div>
             `;
             //console.log(owned[babyindex]);
@@ -244,7 +295,6 @@ app.use("/", (req, res) => {
       return b.babies.length-a.babies.length;
     });
     for (let member of members) {
-      let nft = '';
       const data = member;
       let hasbaby = member.hasbaby;
       let template = fs.readFileSync('public/listuser.html').toString('utf-8');
@@ -261,14 +311,21 @@ app.use("/", (req, res) => {
       chunks.push(template);
     }
     let template = fs.readFileSync('public/list.html').toString('utf-8');
+    let styleblock = fs.readFileSync('public/styleblock.html').toString('utf-8');
+    template = template.replace('{{styleblock}}', styleblock);
+    let header = fs.readFileSync('public/header.html').toString('utf-8');
+    template = template.replace('{{header}}', header);
     const out = template.replace('{{content}}', chunks.join(''));
     cache.set('list', out, 999999999);
+    res.setHeader('Content-Type', 'text/html');
     res.end(out);
   } catch (e) {
-    console.error(e)
-    res.end('err')
+    console.error(e);
+    res.setHeader('Content-Type', 'text/html');
+    res.end('err');
   }
 });
+
 
 /**
 Method
