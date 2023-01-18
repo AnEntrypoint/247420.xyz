@@ -12,6 +12,15 @@ const Web3 = require("web3");
 const fetch = require('node-fetch-commonjs');
 let httpServer;
 
+const partials = {};
+const getPartial = (name) => {
+  let partial = cache.get(name);
+  if(!partial) {
+    partial = fs.readFileSync('partials/' + name);
+    cache.set('partial-'+name, partial);
+  }
+  return partial;
+}
 //let web3 = new Web3(new Web3.providers.HttpProvider("https://****/"));
 
 let web3 = new Web3("https://polygon-rpc.com");
@@ -89,27 +98,31 @@ const abi = {
 let dns = new web3.eth.Contract(abi.abi, "0xB96635E821Ef53790628705e1B68fca7958b42a3");
 let owners = JSON.parse(fs.readFileSync('public/babies/owners.json'));
 let oldcount = 0;
+let progress = 0;
 const getBabies = async () => {
   let count = await dns.methods.totalMinted().call();
   if (oldcount == count) return;
   for (let x = 0; x < count; x++) {
     try {
-      console.log({baby:x});
+      cache.del('list');
+      console.log({ baby: x });
       const owner = await dns.methods.ownerOf(x).call()
-      await new Promise(res=>setTimeout(res,500));
+      await new Promise(res => setTimeout(res, 500));
       if (!owners[owner]) owners[owner] = {};
-      if(owners[owner][x]) continue;
+      if (owners[owner][x]) continue;
       const uri = await dns.methods.tokenURI(x).call();
       const json = await (await fetch(uri.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/'))).json();
       owners[owner][x] = json;
       const channel = await client.channels.fetch('843928612276273162');
-      if(x > oldcount)channel.send({content: "Genesis baby minted: "+json.name+' '+json.image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')});
-      await new Promise(res=>setTimeout(res,500));
+      if (x > oldcount) {
+        channel.send({ content: "Genesis baby minted: " + json.name + ' ' + json.image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/') });
+      } 
+      await new Promise(res => setTimeout(res, 500));
     } catch (e) {
       console.error(e)
     }
   }
-  oldcount = count;
+  progress = oldcount = count;
   fs.writeFileSync('public/babies/owners.json', JSON.stringify(owners));
 }
 setInterval(async () => {
@@ -130,10 +143,29 @@ const NodeCache = require("node-cache");
 const cache = new NodeCache();
 const path = require('path');
 
+app.get('/:template', (req, res, next) => {
+  const template = req.params.template;
+  console.log({ template });
+  fs.readFile(`partials/${template}.html`, 'utf8', (err, data) => {
+    if (err) {
+      console.log(err);
+      next();
+    } else {
+      // Replace all instances of {{tag}} with the corresponding data
+      const modifiedData = data.replace(/{{(.*?)}}/g, (match, tag) => {
+        return getPartial(tag + '.html') || match
+      })
+      res.send(modifiedData)
+    }
+  })
+})
+
+
+
 app.get('/random-png', (req, res) => {
   // specify the directory containing the PNG files
   const directory = 'public/schwepes-transparent';
-  
+
   // read all files in the directory
   fs.readdir(directory, (err, files) => {
     if (err) {
@@ -141,10 +173,10 @@ app.get('/random-png', (req, res) => {
     } else {
       // filter for PNG files
       const pngFiles = files.filter(file => file.endsWith('.png'));
-      
+
       // choose a random file
       const randomFile = pngFiles[Math.floor(Math.random() * pngFiles.length)];
-      
+
       // read the file and send its contents as the response
       fs.readFile(path.join(directory, randomFile), (err, data) => {
         if (err) {
@@ -188,15 +220,15 @@ app.all("/verify", function (req, res) {
   }
 });
 
+
 app.use("/@:id", (req, res) => {
   try {
     const address = req.params.id.replace('.json', '');
     const data = JSON.parse(fs.readFileSync("public/members/" + address + ".json"));
-    let template = fs.readFileSync('public/profile.html').toString('utf-8');
-    let styleblock = fs.readFileSync('public/styleblock.html').toString('utf-8');
-    template = template.replace('{{styleblock}}', styleblock);
-    let header = fs.readFileSync('public/header.html').toString('utf-8');
-    template = template.replace('{{header}}', header);
+    let template = fs.readFileSync('partials/profile.html').toString('utf-8');
+    template = template.replace('{{styleblock}}', getPartial('styleblock.html'));
+
+    template = template.replace('{{header}}', getPartial('header.html'));
     for (let entry in data) {
       while (template.indexOf(`{{` + entry + `}}`) != -1) {
         template = template.replace(`{{` + entry + `}}`, data[entry]);
@@ -233,7 +265,7 @@ app.use("/@:id", (req, res) => {
 
 app.use("/schwepes", (req, res) => {
   const files = fs.readdirSync('./public/schwepes-transparent');
-  let htmls =[];
+  let htmls = [];
   const cached = cache.get('schwepes');
   if (cached) {
     console.log('cached schwepes');
@@ -243,7 +275,7 @@ app.use("/schwepes", (req, res) => {
   }
   try {
     for (const file of files) {
-      htmls.push( `<img alt="genesisbaby" width="200" loading="lazy" style="border-radius: 1em;" src="schwepes-transparent/${file}">`);
+      htmls.push(`<img alt="genesisbaby" width="200" loading="lazy" style="border-radius: 1em;" src="schwepes-transparent/${file}">`);
     }
     const out = htmls.join('');
     cache.set('schwepes', out, 999999999);
@@ -256,10 +288,14 @@ app.use("/schwepes", (req, res) => {
   }
 });
 
+app.get('/discord', (req, res) => {
+  res.redirect('https://discord.gg/an-entrypoint-367741339393327104');
+});
+
 app.use("/", (req, res) => {
   const files = fs.readdirSync('./public/members');
   let chunks = [];
-  let members =[];
+  let members = [];
   const cached = cache.get('list');
   if (cached) {
     console.log('cached');
@@ -278,9 +314,9 @@ app.use("/", (req, res) => {
         if (address.toLowerCase() === ownerindex.toLowerCase()) {
           const owned = babies[ownerindex];
           for (babyindex in owned) {
-              member.babies.push(owned);
-              member.hasbaby = true;
-              member.nft += `
+            member.babies.push(owned);
+            member.hasbaby = true;
+            member.nft += `
                 <div style="display:inline-block;margin:1em;">
                     <img alt="genesisbaby" loading="lazy" style="border-radius: 1em;" height="64" width="64" src="${owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')}">
                 </div>
@@ -291,13 +327,13 @@ app.use("/", (req, res) => {
       }
       members.push(member);
     }
-    members.sort((a,b)=>{
-      return b.babies.length-a.babies.length;
+    members.sort((a, b) => {
+      return b.babies.length - a.babies.length;
     });
     for (let member of members) {
       const data = member;
       let hasbaby = member.hasbaby;
-      let template = fs.readFileSync('public/listuser.html').toString('utf-8');
+      let template = fs.readFileSync('partials/listuser.html').toString('utf-8');
       if (!data.nickname || !data.avatar || !data.shortform || !data.description) continue;
       data.customlistavatarclass = hasbaby ? 'spin' : '';
       for (let entry in data) {
@@ -310,11 +346,11 @@ app.use("/", (req, res) => {
       template = template.replace(`{{nft}}`, member.nft);
       chunks.push(template);
     }
-    let template = fs.readFileSync('public/list.html').toString('utf-8');
-    let styleblock = fs.readFileSync('public/styleblock.html').toString('utf-8');
-    template = template.replace('{{styleblock}}', styleblock);
-    let header = fs.readFileSync('public/header.html').toString('utf-8');
-    template = template.replace('{{header}}', header);
+    let template = fs.readFileSync('partials/index.html').toString('utf-8');
+    template = template.replace('{{styleblock}}', getPartial('styleblock.html'));
+    template = template.replace('{{header}}', getPartial('header.html'));
+    template = template.replace('{{progress}}', progress);
+    
     const out = template.replace('{{content}}', chunks.join(''));
     cache.set('list', out, 999999999);
     res.setHeader('Content-Type', 'text/html');
@@ -365,6 +401,11 @@ client.on("message", (message) => {
   }
 });
 
+fs.watch('./partials', (eventType, filename) => {
+  console.log('file change detected');
+  partials.length = 0;
+  cache.flushAll();
+});
 client.login(process.env.DISCORDTOKEN);
 
 httpServer = http.createServer(app);

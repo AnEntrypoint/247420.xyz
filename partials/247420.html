@@ -15,166 +15,15 @@
 </head>
 
 <body style='
-background-image: url("bg.png");
+background-image: url("/bg.png");
 background-repeat: repeat;
 '>
-    <style>
-        body::before {
-            content: "";
-            position: absolute;
-            background-image: url(leaves.jpg);
-            filter: grayscale(100%);
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
-
-        *,
-        *::before,
-        *::after {
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: rgba(13, 30, 18, 1);
-            color: #fff;
-            font-family: "Poppins", sans-serif;
-        }
-
-        a {
-            text-decoration: none;
-            color: #a6a8b8;
-        }
-
-        section.main a {
-            color: #a6a8b8;
-            text-decoration: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            height: 20em;
-            animation: fadeInUp .8s;
-        }
-
-        #shadow>section {
-            display: block;
-            background-color: rgba(13, 30, 18, 0.8);
-            border-radius: 2em;
-            padding: 20px;
-        }
-
-        .shadow {
-            background-color: rgba(13, 30, 18, 0.8);
-            border-radius: 2em;
-            padding: 1em;
-        }
-
-        #avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 100%;
-            object-fit: cover;
-            padding: 10px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-
-        section.main {
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin: 2em;
-        }
-
-        #description {
-            border-radius: 2em;
-            padding: 20px;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
-        }
-
-        section.main h4 {
-            padding: 20px;
-        }
-
-        #avatar {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 100%;
-            padding: 10px;
-            cursor: pointer;
-            background-color: rgba(0, 255, 0, 0.8);
-        }
-
-        section.main span {
-            color: #fffffe;
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-        #shadow {
-            position: relative;
-            padding: 2em;
-            margin: 0px;
-            min-height: 1vh;
-        }
-
-        section.main>p {
-            max-width: 1000px;
-            font-size: 13px;
-            color: #bdc7d3;
-        }
-
-
-        section.main ul {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-
-        section.main ul li a {
-            color: #a6a8b8;
-            display: flex;
-            text-decoration: none;
-            margin: 20px 5px;
-            font-size: 25px;
-            padding: 5px;
-            transition: 0.2s all;
-            height: 0px;
-        }
-
-        a:hover {
-            transition: 0.2s all;
-            color: #fff;
-        }
-    </style>
-    <header>
-        <nav>
-            <div class="header_logo">
-                <a href="/"><img src="/logo.gif" width="150" height="100" alt="logo" srcset=""></a>
-            </div>
-            <div class="header_links">
-                <ul class="nav_links">
-                    <li class="nav_link"><a href="https://247420.xyz/247420.html">marijuana green</a></li>
-                    <!-- <li class="nav_link"><a href="https://about.247420.xyz" target="_blank">about 247420</a></li> -->
-                    <!-- <li class="nav_link"><a href="#">Shop</a></li> -->
-                    <!-- <li class="nav_link"><a href="#">Repos</a></li> -->
-                </ul>
-            </div>
-        </nav>
-    </header>
+    {{styleblock}}
+    {{header}} 
     <div style="max-width:1000px; margin:auto;">
         <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly;">
             <div class="shadow">
-                <center>
+                <div style="text-align: center;">
                     <p>
                         <img src="https://media.discordapp.net/attachments/843928612276273162/1064544115519389736/images.png"
                             alt="#247420 marijuana green" />
@@ -189,7 +38,8 @@ background-repeat: repeat;
                         also holds a deeper meaning. The color green is often associated with nature, growth, and
                         healing. These associations align perfectly with the benefits and potential of the marijuana
                         plant, making it the perfect symbol for the movement.</p>
-                        <img src="https://images-ext-2.discordapp.net/external/7kFfyE8rKJ5N70nkQYArH5ALvV5CnHITkOLHInX-JUE/https/fontmeme.com/temporary/3137f381f71fa904cdbe3e7666dba482.png" alt="247420 green"/>
+                    <img src="https://images-ext-2.discordapp.net/external/7kFfyE8rKJ5N70nkQYArH5ALvV5CnHITkOLHInX-JUE/https/fontmeme.com/temporary/3137f381f71fa904cdbe3e7666dba482.png"
+                        alt="247420 green" />
                     <p>As the legalization and acceptance of marijuana continue to grow, the color #247420 will continue
                         to represent the plant, the movement, and the cultural and societal changes surrounding it. This
                         shade of green will be a symbol of hope, progress, and the power of nature to heal and bring
@@ -226,7 +76,7 @@ background-repeat: repeat;
                         marijuana movement. The association of this color to marijuana is based on the natural and
                         organic aspect of the plant, and the RGB values also give a sense of natural and organic look to
                         the color which aligns well with the plant and its benefits.</p>
-                </center>
+                </div>
             </div>
         </div>
     </div>
@@ -236,7 +86,6 @@ background-repeat: repeat;
     <script>
         document.querySelectorAll('li').forEach(a => { if (a.children[0].href == window.location.href || a.children[0].href == 'https://twitter.com/' || a.children[0].href == 'https://facebook.com/' || a.children[0].href == 'https://youtube.com/') a.style.display = 'none' });
     </script>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous">
