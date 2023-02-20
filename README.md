@@ -1,11 +1,60 @@
-247420.xyz
+# todos-express-ethereum
 
-We are is a Discord community of creative professionals who are dedicated to producing the world's most innovative and original media. These individuals work around the clock, using their skills and talents to craft unique and engaging content that resonates with audiences of all ages.
+This app illustrates how to use [Passport](https://www.passportjs.org/) with
+[Express](https://expressjs.com/) to sign users in with an Ethereum wallet.  Use
+this example as a starting point for your own web applications.
 
-At the heart of this community is a shared passion for creativity and a love of weed. Members of this community enjoy smoking marijuana as they work, using it as a tool to unlock their full creative potential and push the boundaries of what is possible.
+## Quick Start
 
-Whether they are working on music, art, film, or something else entirely, these creative professionals are always looking for ways to bring something new and exciting to the table. They are a tight-knit group, always willing to collaborate and support one another as they strive to achieve their goals.
+To run this app, clone the repository and install dependencies:
 
-As a result of their tireless efforts and dedication, this community has become a hub for some of the most impressive and original media being produced today. From cutting-edge music and art to groundbreaking films and more, this community is filled with creative individuals who are pushing the limits and constantly finding new ways to express themselves.
+```bash
+$ git clone https://github.com/passport/todos-express-ethereum.git
+$ cd todos-express-ethereum
+$ npm install
+```
 
-Overall, this Discord community of creative professionals working around the clock and smoking weed is a place where the most talented and innovative minds come together to create truly memorable and impactful media. So, if you're a creative professional looking to join a supportive and inspiring community, this could be the perfect place for you.
+Then start the server.
+
+```bash
+$ npm start
+```
+
+Navigate to [`http://localhost:3000`](http://localhost:3000).
+
+## Overview
+
+This app illustrates how to build a todo app with sign in functionality using
+Express, Passport, and the [`passport-ethereum-siwe`](https://www.passportjs.org/packages/passport-ethereum-siwe/)
+strategy.
+
+This app is a traditional web application, in which application logic and data
+persistence resides on the server.  HTML pages and forms are rendered by the
+server and client-side JavaScript is kept to a minimum.
+
+This app is built using the Express web framework.  Data is persisted to a
+[SQLite](https://www.sqlite.org/) database.  HTML pages are rendered using [EJS](https://ejs.co/)
+templates, and are styled using vanilla CSS.
+
+When a user first arrives at this app, they are prompted to sign in.  To sign
+in, the [Ethereum Provider](https://eips.ethereum.org/EIPS/eip-1193) API is used
+to request that the user sign a message.  Once authenticated, a login session is
+established and maintained between the server and the user's browser with a
+cookie.
+
+After signing in, the user can view, create, and edit todo items.  Interaction
+occurs by clicking links and submitting forms, which trigger HTTP requests.
+The browser automatically includes the cookie set during login with each of
+these requests.
+
+When the server receives a request, it authenticates the cookie and restores the
+login session, thus authenticating the user.  It then accesses or stores records
+in the database associated with the authenticated user.
+
+## License
+
+[The Unlicense](https://opensource.org/licenses/unlicense)
+
+## Credit
+
+Created by [Jared Hanson](https://www.jaredhanson.me/)
