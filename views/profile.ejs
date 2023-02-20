@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/logo.gif">
+        <title><%=Pseudonym%>
+            -
+            <%=Subtitle%></title>
+        <link rel="canonical" href="https://247420.xyz"/>
+        <meta name="robots" content="index, follow"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+    </head>
+
+    <body style='
+    background-image: url("bg.png");
+    background-repeat: repeat;
+    '>
+        
+        <%-styleblock%>
+        <div class="flex min-h-screen flex-col pb-14 md:pb-0">
+            <%-header%>
+            
+            <div class="h-52 sm:h-80 shadow-lg" style="background-image: url(&quot;<%=Background%>&quot;); background-color: rgb(139, 92, 246); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
+            <div class="container mx-auto max-w-screen-xl flex-grow px-0 pt-8 pb-2 sm:px-5 pt-6">
+                <div class="grid grid-cols-12 lg:gap-8 ">
+                    <div class="col-span-12 md:col-span-12 lg:col-span-4 ">
+                        <div class="mb-4 space-y-5 px-5 sm:px-0">
+                            <div class="relative -mt-24 h-32 w-32 sm:-mt-32 sm:h-52 sm:w-52"><img src="<%=Avatar%>" class="h-32 w-32 rounded-xl bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-52 sm:w-52 shadow-lg" height="128" width="128" alt="<%=Pseudonym%>"></div>
+                            <div class="space-y-1 py-2">
+                                <div class="flex items-center gap-1.5 text-2xl font-bold">
+                                    <div class="truncate"><%=Pseudonym%></div>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="from-brand-600 dark:from-brand-400 bg-gradient-to-r to-pink-600 bg-clip-text text-transparent dark:to-pink-400 text-sm sm:text-base">@teknopath</span>
+                                </div>
+                            </div>
+                            <div class="leading-md linkify text-md mr-0 break-words sm:mr-10">
+                                <span class=""><%=Bio%></span>
+                            </div>
+                            <div class="space-y-5">
+                                <h4>OFFICIAL HOLDINGS</h4>
+                                <div class="flex gap-8">
+                                    <%-nft%>
+                                </div>
+                                <div class="divider w-full"></div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <div class="text-md truncate">
+                                            <span>
+                                                <a href="https://rarible.com/token/polygon/<%=User%>" target="_blank" rel="noreferrer" class="text-sm"><%=User%></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2"><img src="https://www.google.com/s2/favicons?domain=247420.xyz/@3" class="h-4 w-4 rounded-full" height="16" width="16" alt="Website"><div class="text-md truncate">
+                                            <a href="https://247420.xyz/@3" target="_blank" rel="noreferrer noopener me">247420.xyz/@3</a>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2"><img src="https://static-assets.lenster.xyz/images/brands/twitter-dark.svg" class="h-4 w-4" height="16" width="16" alt="Twitter Logo"><div class="text-md truncate">
+                                            <a href="https://twitter.com/<%=Twitter%>" target="_blank" rel="noreferrer noopener"><%=Twitter%></a>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="text-md truncate">
+                                                <a target="_blank" href="https://discord.gg/an-entrypoint-367741339393327104">
+                                                    <i class="fab fa-discord"></i>247420
+                                                </a>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="text-md truncate">
+                                            <a target="_blank" href="https://github.com/<%=Github%>">
+                                                <i class="fab fa-github"></i>
+                                                <%=Github%>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="text-md truncate">
+                                            <a target="_blank" href="https://youtube.com/<%=Youtube%>">
+                                                <i class="fab fa-youtube"></i>
+                                                <%=Youtube%>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="text-md truncate">
+                                            <a target="_blank" href="<%=Mastodon%>">
+                                                <i class="fab fa-mastodon"></i>
+                                                <%=Mastodon%>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="text-md truncate">
+                                            <a target="_blank" href="https://www.facebook.com/<%=Facebook%>">
+                                                <i class="fab fa-facebook"></i>
+                                                <%=Facebook%>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-12 mb-5 md:col-span-12 lg:col-span-8 space-y-5">
+
+                        <div class="infinite-scroll-component__outerdiv">
+                            <div class="infinite-scroll-component " style="height: auto; overflow: auto;">
+                                <div class="rounded-none sm:rounded-xl border bg-white dark:border-gray-700 dark:bg-black divide-y-[1px] dark:divide-gray-700" data-test="">
+
+                                    <%for(const Post of Posts) { console.log(Post); %>
+                                    <article class="cursor-pointer p-5 first:rounded-t-xl last:rounded-b-xl hover:bg-gray-100 dark:hover:bg-gray-900">
+                                        <a href="https://lenster.xyz/posts/<%=Post.id%>">
+                                            <div class="flex justify-between space-x-1.5 pb-4">
+                                                <span>
+                                                    <div class="flex items-center justify-between">
+                                                        <span>
+                                                            <span aria-expanded="false">
+                                                                <div class="flex items-center space-x-3"><img src="<%=Avatar%>" loading="lazy" class="h-10 w-10 rounded-full border bg-gray-200 dark:border-gray-700" height="40" width="40" alt="teknopath"><div>
+                                                                        <div class="flex max-w-sm items-center truncate">
+                                                                            <div class="text-md"><%=Pseudonym%></div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span class="from-brand-600 dark:from-brand-400 bg-gradient-to-r to-pink-600 bg-clip-text text-transparent dark:to-pink-400 text-sm">@teknopath</span>
+                                                                            <span class="lt-text-gray-500">
+                                                                                <span class="mx-1.5">·</span>
+                                                                                <span class="text-xs" title="Feb 14, 2023, 9:05:14 AM"><%=Post.createdAt%></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                        </span>
+
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="ml-[53px]">
+                                                <div class="break-words">
+                                                    <span class="leading-md linkify text-md whitespace-pre-wrap break-words"><%=Post.metadata.description||Post.metadata.content%></span>
+                                                    <div class="grid-cols-1 grid-rows-1 grid gap-2 pt-3">
+                                                        <div class="  w-2/3 relative">
+                                                            <% for(const Media of Post.metadata.media||[]) { console.log(Media)
+                                                                if(Media.original.mimeType == 'video/mp4') {  %>
+                                                                     <span style="box-sizing: border-box; display: block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;">
+                                                                         <video controls="" name="media"><source src="<%=Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')%>" type="video/mp4" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%; object-fit: cover;"/></video>
+                                                                     </span>
+                                                                 <% } else if(Media.original.mimeType.startsWith('image')){ %>
+                                                                     <img class="cursor-pointer rounded-lg border bg-gray-100 object-cover dark:border-gray-700 dark:bg-gray-800" loading="lazy" height="1000" width="1000" src="<%=Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')%>" alt="<%=Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')%>"/>
+                                                                 <%}%>
+            
+                                                             <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </a>
+                                    </article>
+                                <% } %>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

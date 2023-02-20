@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/logo.gif">
+        <title>Smoking weed and Creating content | 247420.xyz</title>
+        <link rel="canonical" href="https://247420.xyz"/>
+        <meta name="robots" content="index, follow"/>
+        <meta name="description" content="Join the entrypoint community of people who smoke weed and create amazing content like music, graphics and websites. Free to join at 247420.xyz"/>
+
+    </head>
+
+    <body style='
+            background-image: url("bg.png");
+            background-repeat: repeat;
+            '>
+        <%-styleblock%>
+        <%-header%>
+
+        <div  style="max-width:1000px; margin:auto;">
+            <div class="shadow-2xl hero m-10">
+                <h1 class="m-6">Welcome to 247420</h1>
+                <p class="m-6">A community of like-minded individuals who come together to celebrate their love for cannabis and create content that reflects their shared interests.</p>
+                <a href="/discord" class="cta" class="m-3">Join us now</a>
+                <div style="text-align: center;" class="m-3">
+                    <h1>
+                        FUND RAISERS
+                    </h1>
+                </div>
+                <div class="m-6" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly;">
+                    <a href="https://247420.xyz/Genesis%20babies">
+                        <div class="shadow" style="max-width:400px">
+                            <center>
+                                <h4>
+                                    <span>[ep]</span>&nbsp;Genesis Babies</h4>
+                                <code>
+                                    <h4>- Click here to learn more or claim your own genesis baby -</h4>
+                                </code>
+                                <h4>FUND RAISER PROGRESS</h4>
+                                <progress id="file" value="<%=progress%>" max="100">
+                                <%=progress%>%
+                            </progress>
+                        </center>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </body>
+</html></div><div class=" w-full border-t bg-white dark:border-t-gray-700 dark:bg-black shadow-2xl" style=" display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly;">
+<%for(const member of members) {%>
+    <section class="main listuser">
+        <div class="listusercontent  border-2">
+            <a href="<%=member.url%>">
+                <img loading="lazy" id="avatar" src="<%=member.Avatar%>" alt="" class="{{ customlistavatarclass }}" srcset="">
+                <section>
+                    <h3><%=member.Pseudonym%></h3>
+                </section>
+                <section class="text-xs">
+                    <%=member.User%>
+                </section>
+                <section>
+                    <%-member.nft%>
+                </section>
+
+                <section>
+                    <h4><%=member.Subtitle%></h4>
+                </section>
+            </a>
+            <ul>
+                <li><a target="_blank" href="https://discord.gg/an-entrypoint-367741339393327104"><i class="fab fa-discord"></i></a></li>
+                <li><a target="_blank" href="https://github.com/<%=member.Github%>"><i class="fab fa-github"></i></a></li>
+                <li><a target="_blank" href="https://youtube.com/<%=member.Youtube%>"><i class="fab fa-youtube"></i></a></li>
+                <li><a target="_blank"href="<%=member.Mastodon%>"><i class="fab fa-mastodon"></i></a></li>
+                <li><a target="_blank" href="https://twitter.com/<%=member.Twitter%>"><i class="fab fa-twitter"></i></a></li>
+                <li><a target="_blank" href="https://facebook.com/<%=member.Facebook%>"><i class="fab fa-facebook"></i></a></li>
+            </ul>
+        </div>
+    </section>
+<%}%></div><script>
+document.querySelectorAll('li').forEach(a => {
+    if (a.children[0].href == window.location.href || a.children[0].href == 'https://twitter.com/' || a.children[0].href == 'https://github.com/' || a.children[0].href == 'https://facebook.com/' || a.children[0].href == 'https://youtube.com/') 
+        a.style.display = 'none'
+    
+});</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous"></body></html>

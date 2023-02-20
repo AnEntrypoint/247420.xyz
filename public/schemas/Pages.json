@@ -1,0 +1,36 @@
+{
+    "list": [
+        {
+            "type": "input",
+            "title": "Title",
+            "name": "Title"
+        },
+        {
+            "type": "input",
+            "title": "Subtitle",
+            "name": "Subtitle"
+        },
+        {
+            "type": "input",
+            "name": "Tags",
+            "title": "Tags"
+        }
+    ],
+    "form": [
+        {
+            "type": "input",
+            "title": "Title",
+            "name": "Title"
+        },
+        {
+            "type": "input",
+            "title": "Subtitle",
+            "name": "Subtitle"
+        },
+        {
+            "type": "input",
+            "name": "Tags",
+            "title": "Tags"
+        }
+    ]
+}

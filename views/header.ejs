@@ -1,0 +1,45 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<header class="relative z-10 w-full border-b bg-white dark:border-b-gray-700 dark:bg-black" data-headlessui-state="">
+    <div class="container mx-auto max-w-screen-xl px-5">
+        <div class="relative flex h-14 items-center justify-between sm:h-16">
+            <div class="flex items-center justify-start">
+                
+                <nav>
+                    <div class="header_logo">
+                        <a href="/">
+                            <img src="/logo.gif" width="150" height="100" alt="logo" srcset="" class="hidden md:block rounded-xl bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black drop-shadow-2xl" style="margin-top:3em"></a>
+                    </div>
+                    <div class="header_links">
+                            <ul class="nav_links" style="width:300px">
+                                <li class="nav_link">
+                                    <a href="/247420">about numbers</a>
+                                </li>
+
+                                <li class="">
+                                    <a href="https://discord.com/invite/NED33mNpms">discord</a>
+                                </li>
+                                
+                                <% if(user) { %>
+                                    <li class="nav_link">
+                                        <a href="/form/form.html">profile</a>
+                                    </li>
+                                <% } %>
+                            </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <% if(!user) { %>
+                    <a href="/login" class="bg-brand-500 hover:bg-brand-600 border-brand-600 focus:ring-brand-400 border text-white px-3 py-1 inline-flex items-center space-x-1.5 rounded-lg font-bold shadow-sm outline-none focus:ring-2 focus:ring-opacity-50 focus:ring-offset-1 disabled:opacity-50">
+                        <div>Login</div>
+                    </a>
+                <% } else { %>
+                    <form action="/logout" method="post" style="margin:0px;padding:0px;">
+                        <a href="javascript:{}" class="logout bg-brand-500 hover:bg-brand-600 border-brand-600 focus:ring-brand-400 border text-white px-3 py-1 inline-flex items-center space-x-1.5 rounded-lg font-bold shadow-sm outline-none focus:ring-2 focus:ring-opacity-50 focus:ring-offset-1 disabled:opacity-50" onclick="this.closest('form').submit(); return false;">sign out</a>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    </form>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</header>
