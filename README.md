@@ -1,4 +1,4 @@
-# todos-express-ethereum
+# 247420.xyz
 
 This app illustrates how to use [Passport](https://www.passportjs.org/) with
 [Express](https://expressjs.com/) to sign users in with an Ethereum wallet.  Use
@@ -24,7 +24,7 @@ Navigate to [`http://localhost:3000`](http://localhost:3000).
 
 ## Overview
 
-This app illustrates how to build a todo app with sign in functionality using
+This app illustrates how to build a website with sign in functionality using
 Express, Passport, and the [`passport-ethereum-siwe`](https://www.passportjs.org/packages/passport-ethereum-siwe/)
 strategy.
 
