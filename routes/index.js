@@ -42,13 +42,7 @@ router.use("/@:id", async (req, res) => {
       if (data.User.toLowerCase() === ownerindex.toLowerCase()) {
         const owned = babies[ownerindex];
         for (babyindex in owned) {
-          nft += `
-                <div class="shadow" style="display:inline-block;">
-                    <img alt="genesisbaby" height="96" width="96" src="${owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')}">
-                    <h6>${owned[babyindex].name}</h6>
-                    <div style="font-size:10px">${owned[babyindex].attributes.map(a => '<b>' + a.trait_type + '</b>: ' + a.value).join('<br/>')}</div>
-                </div>
-            `;
+          nft += `<img alt="genesisbaby" height="64" width="64" class="border-solid border-black border-2" title="${owned[babyindex].attributes.map(a => a.trait_type + ':' + a.value).join('\n')}" src="${owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')}">`;
         }
       }
     }

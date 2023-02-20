@@ -26,7 +26,8 @@
         <div class="flex min-h-screen flex-col pb-14 md:pb-0">
             <%-header%>
             
-            <div class="h-52 sm:h-80 shadow-lg" style="background-image: url(&quot;<%=Background%>&quot;); background-color: rgb(139, 92, 246); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
+            <%if(Background?.length){%><div class="h-52 sm:h-80 shadow-lg" style="background-image: url(&quot;<%=Background%>&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
+            <%} else {%><div class="h-40 sm:h-40"></div><% } %>
             <div class="container mx-auto max-w-screen-xl flex-grow px-0 pt-8 pb-2 sm:px-5 pt-6">
                 <div class="grid grid-cols-12 lg:gap-8 ">
                     <div class="col-span-12 md:col-span-12 lg:col-span-4 ">
@@ -41,11 +42,11 @@
                                 </div>
                             </div>
                             <div class="leading-md linkify text-md mr-0 break-words sm:mr-10">
-                                <span class=""><%=Bio%></span>
+                                <span class=""><%=Lens[0]?.bio||Bio%></span>
                             </div>
                             <div class="space-y-5">
                                 <h4>OFFICIAL HOLDINGS</h4>
-                                <div class="flex gap-8">
+                                <div class="flex">
                                     <%-nft%>
                                 </div>
                                 <div class="divider w-full"></div>
@@ -57,10 +58,10 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center gap-2"><img src="https://www.google.com/s2/favicons?domain=247420.xyz/@3" class="h-4 w-4 rounded-full" height="16" width="16" alt="Website"><div class="text-md truncate">
-                                            <a href="https://247420.xyz/@3" target="_blank" rel="noreferrer noopener me">247420.xyz/@3</a>
+                                    <div class="flex items-center gap-2"><img src="https://www.google.com/s2/favicons?domain=lenster.xyz" class="h-4 w-4 rounded-full" height="16" width="16" alt="Website"><div class="text-md truncate">
+                                            <a href="https://lenster.xyz/u/<%=Lens[0].handle.split('.')[0]%>" target="_blank" rel="noreferrer noopener me">https://lenster.xyz/u/<%=Lens[0].handle.split('.')[0]%></a>
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="flex items-center gap-2"><img src="https://static-assets.lenster.xyz/images/brands/twitter-dark.svg" class="h-4 w-4" height="16" width="16" alt="Twitter Logo"><div class="text-md truncate">
                                             <a href="https://twitter.com/<%=Twitter%>" target="_blank" rel="noreferrer noopener"><%=Twitter%></a>
                                         </div>
@@ -74,14 +75,17 @@
 
 
                                     </div>
-                                    <div class="flex items-center gap-2">
-                                        <div class="text-md truncate">
-                                            <a target="_blank" href="https://github.com/<%=Github%>">
-                                                <i class="fab fa-github"></i>
-                                                <%=Github%>
-                                            </a>
+                                    <%if(Github?.length) { %>
+                                        <div class="flex items-center gap-2">
+                                            <div class="text-md truncate">
+                                                <a target="_blank" href="https://github.com/<%=Github%>">
+                                                    <i class="fab fa-github"></i>
+                                                    <%=Github%>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <% } %>
+                                    <%if(Youtube?.length) { %>
                                     <div class="flex items-center gap-2">
                                         <div class="text-md truncate">
                                             <a target="_blank" href="https://youtube.com/<%=Youtube%>">
@@ -90,6 +94,9 @@
                                             </a>
                                         </div>
                                     </div>
+                                    <% } %>
+                                    
+                                    <%if(Mastodon?.length) { %>
                                     <div class="flex items-center gap-2">
                                         <div class="text-md truncate">
                                             <a target="_blank" href="<%=Mastodon%>">
@@ -98,6 +105,8 @@
                                             </a>
                                         </div>
                                     </div>
+                                    <% } %>
+                                    <%if(Facebook?.length) { %>
                                     <div class="flex items-center gap-2">
                                         <div class="text-md truncate">
                                             <a target="_blank" href="https://www.facebook.com/<%=Facebook%>">
@@ -106,6 +115,7 @@
                                             </a>
                                         </div>
                                     </div>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>

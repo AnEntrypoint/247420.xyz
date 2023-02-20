@@ -110,10 +110,7 @@ const getBabies = async () => {
             const uri = await dns.methods.tokenURI(x).call();
             const json = await(await fetch(uri.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/'))).json();
             owners[owner][x] = json;
-            // const channel = await client.channels.fetch('843928612276273162');
-            // if (x > oldcount) {
-            // channel.send({ content: "Genesis baby minted: " + json.name + ' ' + json.image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/') });
-            // ss}
+
             await new Promise(res => setTimeout(res, 500));
             
         } catch (e) {
@@ -156,6 +153,8 @@ const getMembers = (async () => {
     profiles(request: { ownedBy: ["${eth}"], limit: 10 }) {
       items {
         id
+        handle
+        bio
       }
       pageInfo {
         prev
@@ -165,7 +164,7 @@ const getMembers = (async () => {
     } 
   }     
 `})).data.profiles.items;
-              console.log(member.Lens);
+              //console.log(member.Lens); 
           } catch (e) {
               // console.error(e);
           }
@@ -218,13 +217,13 @@ fragment MediaFields on Media {
                   }
               })).data.publications.items;
           
-          console.log(member.Posts);
+          //console.log(member.Posts);
           if (! member.Posts) 
               member.Posts = [];
           
           for (const Post of member.Posts) {
               // console.log(Post);
-              console.log({Post});
+              //console.log({Post});
               Post.metadata = JSON.parse(Post.Data || '{}');
               Post.Media = Post.metadata ?. media;
           }
@@ -259,7 +258,6 @@ try {
   global.owners = JSON.parse(fs.readFileSync('babies.json'));
   global.members = JSON.parse(fs.readFileSync('members.json'));
 } catch(e) {
-  console.error(e);
   getMembers();
   getBabies();
 }
