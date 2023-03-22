@@ -32,7 +32,7 @@
                 <div class="grid grid-cols-12 lg:gap-8 ">
                     <div class="col-span-12 md:col-span-12 lg:col-span-4 ">
                         <div class="mb-4 space-y-5 px-5 sm:px-0">
-                            <div class="relative -mt-24 h-32 w-32 sm:-mt-32 sm:h-52 sm:w-52"><img src="<%=Avatar%>" class="h-32 w-32 rounded-xl bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-52 sm:w-52 shadow-lg" height="128" width="128" alt="<%=Pseudonym%>"></div>
+                            <div class="relative -mt-24 h-32 w-32 sm:-mt-32 sm:h-52 sm:w-52"><% if(Avatar) { %><img src="<%=Avatar%>" class="h-32 w-32 rounded-xl bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-52 sm:w-52 shadow-lg" height="128" width="128" alt="<%=Pseudonym%>"><% } %></div>
                             <div class="space-y-1 py-2">
                                 <div class="flex items-center gap-1.5 text-2xl font-bold">
                                     <div class="truncate"><%=Pseudonym%></div>
@@ -59,7 +59,7 @@
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2"><img src="https://www.google.com/s2/favicons?domain=lenster.xyz" class="h-4 w-4 rounded-full" height="16" width="16" alt="Website"><div class="text-md truncate">
-                                            <a href="https://lenster.xyz/u/<%=Lens[0].handle.split('.')[0]%>" target="_blank" rel="noreferrer noopener me">https://lenster.xyz/u/<%=Lens[0].handle.split('.')[0]%></a>
+                                            <a href="https://lenster.xyz/u/<%=Lens[0]?.handle.split('.')[0]%>" target="_blank" rel="noreferrer noopener me">https://lenster.xyz/u/<%=Lens[0]?.handle.split('.')[0]%></a>
                                         </div>
                                     </div> 
                                     <div class="flex items-center gap-2"><img src="https://static-assets.lenster.xyz/images/brands/twitter-dark.svg" class="h-4 w-4" height="16" width="16" alt="Twitter Logo"><div class="text-md truncate">

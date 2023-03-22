@@ -5,6 +5,6 @@ module.exports = {
     watch: ["views", "web", "routes"],
     // Delay between restart
     watch_delay: 1000,
-    ignore_watch : ["node_modules", "client/img", "members.json", "babies.json"],
+    ignore_watch : ["node_modules", "client/img", "members.json", "babies.json", 'db.sqlite'],
   }]
 }
