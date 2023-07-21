@@ -9,7 +9,8 @@ require('./babies.js');
 var store = new SessionNonceStore();
  
 passport.use(new EthereumStrategy({ store: store, utils:{proxy:true} }, function verify(address, cb) {
-  console.log("CHECKING", address);
+  console.log("CHECKING", address, 'http://localhost:8002/api/v1/db/data/v1/247420/Members?where=where%3D%28User%2Ceq%2C'+address+'%29&limit=25&shuffle=0&offset=0');
+
   fetch('http://localhost:8002/api/v1/db/data/v1/247420/Members?where=where%3D%28User%2Ceq%2C'+address+'%29&limit=25&shuffle=0&offset=0', { headers: { 'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv' } }).then(a=>a.json()).then((lookup)=>{
     console.log({address, lookup});
     if(lookup.list.length) {

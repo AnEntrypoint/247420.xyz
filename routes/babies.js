@@ -7,14 +7,14 @@ const cache = new InMemoryCache();
 // const db = require('../db/index.js');
 const defaultOptions = {
     watchQuery: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'ignore',
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'ignore'
     },
     query: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'all',
-    },
-  }
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all'
+    }
+}
 
 const client = new ApolloClient({ // Provide required constructor fields
     cache: cache,
@@ -103,29 +103,18 @@ const getBabies = async () => {
     if (oldcount == count) 
         return;
     
-
-
     for (let x = 0; x < count; x++) {
-        try {
-            console.log({baby: x});
+        try { // console.log({baby: x});
             const owner = await dns.methods.ownerOf(x).call()
             await new Promise(res => setTimeout(res, 500));
             if (!global.owners) 
                 global.owners = {}
 
-
-            
-
-
             if (!global.owners[owner]) 
                 global.owners[owner] = {};
-            
-
 
             if (global.owners[owner][x]) 
                 continue;
-            
-
 
             const uri = await dns.methods.tokenURI(x).call();
             const json = await(await fetch(uri.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/'))).json();
@@ -140,9 +129,8 @@ const getBabies = async () => {
     global.progress = oldcount = count;
     global.owners = owners;
     fs.writeFileSync('babies.json', JSON.stringify(owners));
-
-    // fs.writeFileSync('public/babies/owners.json', JSON.stringify(owners));
 }
+
 function findHashtags(searchText) {
     var regexp = /(\s|^)\#\w\w+\b/gm
     result = searchText.match(regexp);
@@ -151,6 +139,21 @@ function findHashtags(searchText) {
             return s.trim().replace('#', '');
         });
         console.log(result);
+        if(result.length < 5) {
+            result.push('entrypoint')
+        }
+        if(result.length < 5) {
+            result.push('twentyfoursevenfourtwenty')
+        }
+        if(result.length < 5) {
+            result.push('weareone')
+        }
+        if(result.length < 5) {
+            result.push('onethreetheeseven')
+        }
+        if(result.length < 5) {
+            result.push('schoolofminnows')
+        }
         return result;
     } else {
         return false;
@@ -160,20 +163,17 @@ const toSteem = (network, member, Post) => { // if(member.Lens[0].handle === 'te
     if (fs.existsSync(`data/lens-${network}/${
         member.Lens[0].id
     }`)) {
-        // if (Post.id.startsWith('0xb80e'))
-        // console.log(JSON.stringify(Post, null, 2))
 
         try {
             address = JSON.parse(fs.readFileSync(`data/lens-${network}/${
                 member.Lens[0].id
             }`))
-            console.log({address});
+            // console.log(JSON.stringify(Post, null, 2));
             if (address) {
-                if (! fs.existsSync(`data/lens-${network}-done/${
+                if (!fs.existsSync(`data/lens-${network}-done/${
                     Post.id
                 }`)) {
-                    console.log('not existant');
-                    const taglist = findHashtags(Post.metadata.content);
+                    const taglist = findHashtags(Post.metadata.content || '');
 
                     const json_metadata = {
                         tags: taglist,
@@ -181,39 +181,40 @@ const toSteem = (network, member, Post) => { // if(member.Lens[0].handle === 'te
                         links: [],
                         image: []
                     };
+
                     const permlink = "meme" + Math.random().toString(36).substring(2);
                     let body = Post.metadata.content || Post.metadata.description;
+                    let image = Post.metadata.image ?. replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/')
+                    let found = false;
                     for (const Media of Post.metadata.media || []) { // console.log(Media)
                         if (Media.original.mimeType == 'video/mp4') {
                             const vid = "\n" + Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/') + "\n";
-                            body += `[![POST IMAGE](${
-                                Post.metadata.image
-                            })] (${vid})`;
-                        }
-                        if (Media.original.mimeType.startsWith('image')) {
+                            body += `[![POST IMAGE](${image})](${vid})`;
+                            found = true;
+                        } else if (Media.original.mimeType.startsWith('image')) {
                             const image = "\n" + Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/') + "\n";
                             body += `![POST IMAGE](${image})`;
                             json_metadata.image.push(image)
                             json_metadata.links.push(image)
-                        } else {
-                            const image = "\n" + Post.image
-                            if (image) {
-                                body += `![POST IMAGE](${image})`;
-                                json_metadata.image.push(image)
-                                json_metadata.links.push(image)
-                            }
-                        } body += "\n";
-                        body += "See original post here: \n" + "https://lenster.xyz/posts/" + Post.id;
-
-
+                            found = true;
+                        }
+                        body += "\n";
                     }
+                    //if (! found) {
+                        //body += `![POST IMAGE](${image})`;
+                        //json_metadata.image.push(image)
+                        //json_metadata.links.push(image)
+                    //}
+                    body += "See original post here: \n" + "https://lenster.xyz/posts/" + Post.id;
+
+
                     const op = [
                         "comment", {
                             author: address,
                             body,
                             json_metadata: JSON.stringify(json_metadata),
                             parent_author: "",
-                            parent_permlink: (taglist[0] ? taglist[0].toString() : "247420").replace('#', ''),
+                            parent_permlink: (taglist[0] ? taglist[0].toString() : "twentyfoursevenfourtwenty").replace('#', ''),
                             permlink: permlink.toString("hex"),
                             title: Post.metadata.description || Post.metadata.name || Post.metadata.content
                         },
@@ -279,7 +280,8 @@ const getMembers = (async () => {
             if (member.Lens && member.Lens.length) 
                 member.Posts = (await client.query({
                     query: gql `
-query Publications($id: ProfileId!, $limit: LimitScalar) {
+
+        query Publications($id: ProfileId!, $limit: LimitScalar) {
   publications(request: {
     profileId: $id,
     publicationTypes: [POST],
@@ -288,38 +290,32 @@ query Publications($id: ProfileId!, $limit: LimitScalar) {
     items {
       __typename 
       ... on Post {
-        ...PostFields
-      }
+        id
+        createdAt
+        metadata {
+            name
+            description
+            content
+            image
+            media {
+                original {
+                    url
+                    mimeType
+                } 
+            }
+            attributes {
+                displayType
+                traitType
+                value
+            }
+        }
+    }
     }
   }
 }
-fragment PostFields on Post {
-  id
-  createdAt
-  metadata {
-    ...MetadataOutputFields
-  }
-}
-fragment MetadataOutputFields on MetadataOutput {
-  name
-  description
-  content
-  image
-  media {
-    original {
-      ...MediaFields
-    }
-  }
-  attributes {
-    displayType
-    traitType
-    value
-  }
-}
-fragment MediaFields on Media {
-  url
-  mimeType
-}      
+
+
+     
 `,
                     variables: {
                         id: member.Lens[0].id
@@ -337,7 +333,7 @@ fragment MediaFields on Media {
             for (const Post of member.Posts) {
                 // console.log(Post);
                 // console.log({Post});
-                Post.metadata = JSON.parse(Post.Data || '{}');
+                // Post.metadata = JSON.parse(Post.Data || '{}');
                 Post.Media = Post.metadata ?. media;
                 toSteem('steem', member, Post);
                 toSteem('hive', member, Post);
@@ -370,7 +366,6 @@ setInterval(async () => {
     await getBabies();
 }, 300000);
 try {
-    throw new Error();
     global.owners = JSON.parse(fs.readFileSync('babies.json'));
     global.members = JSON.parse(fs.readFileSync('members.json'));
 } catch (e) {
