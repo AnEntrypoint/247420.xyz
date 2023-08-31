@@ -117,7 +117,7 @@ const getBabies = async () => {
                 continue;
 
             const uri = await dns.methods.tokenURI(x).call();
-            const json = await(await fetch(uri.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/'))).json();
+            const json = await(await fetch(uri.replace('ipfs://', 'https://ipfs.io/ipfs/').replace('ar://', 'https://ipfs.io/ipfs/'))).json();
             owners[owner][x] = json;
 
             await new Promise(res => setTimeout(res, 500));
@@ -184,15 +184,15 @@ const toSteem = (network, member, Post) => { // if(member.Lens[0].handle === 'te
 
                     const permlink = "meme" + Math.random().toString(36).substring(2);
                     let body = Post.metadata.content || Post.metadata.description;
-                    let image = Post.metadata.image ?. replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/')
+                    let image = Post.metadata.image ?. replace('ipfs://', 'https://ipfs.io/ipfs/').replace('ar://', 'https://ipfs.io/ipfs/')
                     let found = false;
                     for (const Media of Post.metadata.media || []) { // console.log(Media)
                         if (Media.original.mimeType == 'video/mp4') {
-                            const vid = "\n" + Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/') + "\n";
+                            const vid = "\n" + Media.original.url.replace('ipfs://', 'https://ipfs.io/ipfs/').replace('ar://', 'https://ipfs.io/ipfs/') + "\n";
                             body += `[![POST IMAGE](${image})](${vid})`;
                             found = true;
                         } else if (Media.original.mimeType.startsWith('image')) {
-                            const image = "\n" + Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/') + "\n";
+                            const image = "\n" + Media.original.url.replace('ipfs://', 'https://ipfs.io/ipfs/').replace('ar://', 'https://ipfs.io/ipfs/') + "\n";
                             body += `![POST IMAGE](${image})`;
                             json_metadata.image.push(image)
                             json_metadata.links.push(image)
@@ -236,7 +236,7 @@ const toSteem = (network, member, Post) => { // if(member.Lens[0].handle === 'te
 // db.Member.sync({alter: true});
 
 const getMembers = (async () => {
-    global.members = (await(await fetch('http://localhost:8002/api/v1/db/data/v1/247420/Members', {
+    global.members = (await(await fetch('http://localhost:8000/api/v1/db/data/v1/247420/Members', {
         headers: {
             'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv'
         }
@@ -347,7 +347,7 @@ const getMembers = (async () => {
                         member.nft += `
         <div style="display:inline-block;margin:1em;">
             <img alt="genesisbaby" loading="lazy" style="border-radius: 1em;" height="64" width="64" src="${
-                            owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/').replace('ar://', 'https://gateway.ipfscdn.io/ipfs/')
+                            owned[babyindex].image.replace('ipfs://', 'https://ipfs.io/ipfs/').replace('ar://', 'https://ipfs.io/ipfs/')
                         }">
         </div>
     `;

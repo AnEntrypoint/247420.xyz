@@ -14,7 +14,7 @@ const render = (name, vars)=>{
 
 
 const doApi = async (path, data, method) => {
-  return await (await fetch('http://localhost:8002' + path,
+  return await (await fetch('http://localhost:8000' + path,
     {
       method: method,
       headers: {
@@ -33,7 +33,7 @@ require('./schwepe.js').default(router);
 
 router.use("/@:id", async (req, res) => {
   try {
-    const data = await (await fetch('http://localhost:8002/api/v1/db/data/v1/247420/Members/'+req.params.id, { headers: { 'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv' } })).json();
+    const data = await (await fetch('http://localhost:8000/api/v1/db/data/v1/247420/Members/'+req.params.id, { headers: { 'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv' } })).json();
     const babies = JSON.parse(fs.readFileSync('public/babies/owners.json'));
     console.log({data, babies});
     let nft = '';
@@ -42,7 +42,7 @@ router.use("/@:id", async (req, res) => {
       if (data.User.toLowerCase() === ownerindex.toLowerCase()) {
         const owned = babies[ownerindex];
         for (babyindex in owned) {
-          nft += `<img alt="genesisbaby" height="64" width="64" class="border-solid border-black border-2" title="${owned[babyindex].attributes.map(a => a.trait_type + ':' + a.value).join('\n')}" src="${owned[babyindex].image.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')}">`;
+          nft += `<img alt="genesisbaby" height="64" width="64" class="border-solid border-black border-2" title="${owned[babyindex].attributes.map(a => a.trait_type + ':' + a.value).join('\n')}" src="${owned[babyindex].image.replace('ipfs://', 'https://ipfs.io/ipfs/')}">`;
         }
       }
     }
@@ -59,8 +59,8 @@ var ensureLoggedIn = ensureLogIn();
 
 router.get("/api/*", async (req, res) => {
   const query = req.url.split('?').length?'?'+req.url.split('?')[1]:'';
-  console.log('API', 'http://localhost:8002' + req.path+query?query:'')
-  const fetched = await fetch('http://localhost:8002' + req.path+query, {
+  console.log('API', 'http://localhost:8000' + req.path+query?query:'')
+  const fetched = await fetch('http://localhost:8000' + req.path+query, {
     headers: {
       'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv',
       'Cache-Control': 'no-store',
@@ -72,7 +72,7 @@ router.delete("/api/*", async function (req, res) {
   const user = req.user;
   console.log({user});
   if (!user) return;
-  const loaded = await (await fetch('http://localhost:8002' + req.path, { headers: { 'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv' } })).json();
+  const loaded = await (await fetch('http://localhost:8000' + req.path, { headers: { 'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv' } })).json();
   console.log(loaded, req.path);
   if (user === loaded.User) {
     res.end(await doApi(req.path, JSON.parse('{}'), 'DELETE'));
@@ -85,7 +85,7 @@ router.patch("/api/*", ensureLoggedIn, async function (req, res) {
   console.log("PATCH", req.path, req.user);
   const user = req.user;
   if (!user) return;
-  const loaded = await (await fetch('http://localhost:8002' + req.path, {
+  const loaded = await (await fetch('http://localhost:8000' + req.path, {
     headers: {
       'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv'
     }
@@ -116,7 +116,7 @@ router.get('/login', function(req, res, next) {
 
 router.get('/:template', async (req, res, next) => {
   const template = req.params.template;
-  const lookup = await (await fetch('http://localhost:8002/api/v1/db/data/v1/247420/Pages?where=where%3D%28Title%2Ceq%2C'+template+'%29&limit=25&shuffle=0&offset=0', { headers: { 'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv' } })).json();
+  const lookup = await (await fetch('http://localhost:8000/api/v1/db/data/v1/247420/Pages?where=where%3D%28Title%2Ceq%2C'+template+'%29&limit=25&shuffle=0&offset=0', { headers: { 'xc-token': '55Jw_CWV4FLDzIsi2pKMVulCzSadVFNs96C1WYEv' } })).json();
   let data = lookup.list[0];
   if(!data) {
     console.error('cant find '+template)

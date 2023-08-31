@@ -160,9 +160,9 @@
                                                         <div class="  w-2/3 relative">
                                                             <% for(const Media of Post.metadata.media||[]) { console.log("MEDIA\n_______\n",Media)
                                                                 if(Media.original.mimeType.startsWith('video')) {  %>
-                                                                    <video controls="" name="media"><source src="<%=Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')%>" type="<%=Media.original.mimeType%>" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%; object-fit: cover;"/></video>
+                                                                    <video controls="" name="media"><source src="<%=Media.original.url.replace('ipfs://', 'https://ipfs.io/ipfs/')%>" type="<%=Media.original.mimeType%>" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%; object-fit: cover;"/></video>
                                                                  <% } else if(Media.original.mimeType.startsWith('image')){ %>
-                                                                     <img class="cursor-pointer rounded-lg border bg-gray-100 object-cover dark:border-gray-700 dark:bg-gray-800" loading="lazy" height="1000" width="1000" src="<%=Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')%>" alt="<%=Media.original.url.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')%>"/>
+                                                                     <img class="cursor-pointer rounded-lg border bg-gray-100 object-cover dark:border-gray-700 dark:bg-gray-800" loading="lazy" height="1000" width="1000" src="<%=Media.original.url.replace('ipfs://', 'https://ipfs.io/ipfs/')%>" alt="<%=Media.original.url.replace('ipfs://', 'https://ipfs.io/ipfs/')%>"/>
                                                                  <%console.log("MEDIA\n _______ \n")}%>
             
                                                              <% } %>
